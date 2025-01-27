@@ -1,11 +1,30 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>BabylonJS Circle Example</title>
+    <title>BabylonJS Sphere</title>
+    <link rel="stylesheet" href="./assets/css/style.css">
     <script src="https://cdn.babylonjs.com/babylon.js"></script>
 </head>
 <body>
-    <canvas id="renderCanvas" style="width: 100%; height: 100%;"></canvas>
+    <div id="control_panel">
+        <div>
+            <label class="label" for="baseTexture">Base Texture : </label>
+            <input type="file" id="baseTexture" accept="image/*"><br>
+        </div>
+        <div>
+            <label class="label" for="overlayTexture">Overlay Texture : </label>
+            <input type="file" id="overlayTexture" accept="image/*"><br>
+        </div>
+        <div>
+            <label class="label" for="lightmapTexture">Lightmap : </label>
+            <input type="file" id="lightmapTexture" accept="image/*"><br>
+        </div>
+        <div>
+            <label class="label" for="tintColor">Tint Color : </label>
+            <input type="color" id="tintColor" value="#800080"><br>
+        </div>
+    </div>
+    <canvas id="renderCanvas" style="width: 100%; height: 100%; overflow: hidden;"></canvas>
  <script src="./assets/js/script.js" ></script>
 </body>
 </html>

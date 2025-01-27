@@ -13,19 +13,60 @@ camera.attachControl(canvas, true);
 // Create a sphere
 var sphere = BABYLON.MeshBuilder.CreateSphere("sphere", {diameter: 2, segments: 32}, scene);
 var sphereMaterial = new BABYLON.StandardMaterial("sphereMaterial", scene);
-// sphereMaterial.diffuseColor = new BABYLON.Color3(0.8, 0.1, 0.1);
-// sphereMaterial.diffuseTexture = new BABYLON.Texture('./assets/img/model.png');
 
-sphereMaterial.lightmapTexture = new BABYLON.Texture('./assets/img/model.png', scene);
-sphereMaterial.useLightmapAsShadowmap = true;
+sphereMaterial.diffuseTexture = new BABYLON.Texture('./assets/img/model.png');
 
-var patternTexture = new BABYLON.Texture('./assets/img/circleTexture.png', scene);
-patternTexture.hasAlpha = true; // Ensure the pattern has transparency
-sphereMaterial.diffuseTexture = patternTexture;
+document.getElementById("baseTexture").addEventListener("change", function(event) {
+    var file = event.target.files[0];
+    if (file) {
+        var reader = new FileReader();
+        reader.onload = function(fileEvent) {
+            var baseTexture = new BABYLON.Texture(fileEvent.target.result, scene);
+            sphereMaterial.diffuseTexture = baseTexture;
+        };
+        reader.readAsDataURL(file);
+    }
+});
+
+var overlayTexture = new BABYLON.Texture('./assets/img/circleTexture.png', scene);
+overlayTexture.hasAlpha = true;
+sphereMaterial.emissiveTexture  = overlayTexture;
+
+document.getElementById("overlayTexture").addEventListener("change", function(event) {
+    var file = event.target.files[0];
+    if (file) {
+        var reader = new FileReader();
+        reader.onload = function(fileEvent) {
+            overlayTexture = new BABYLON.Texture(fileEvent.target.result, scene);
+            overlayTexture.hasAlpha = true;
+            sphereMaterial.emissiveTexture = overlayTexture;
+        };
+        reader.readAsDataURL(file);
+    }
+});
+
+sphereMaterial.emissiveColor  = BABYLON.Color3.FromHexString('#800080');
+
+document.getElementById("tintColor").addEventListener("input", function(event) {
+    var tintColor = event.target.value;
+    sphereMaterial.emissiveColor = BABYLON.Color3.FromHexString(tintColor); // Applies tint color to the pattern overlay
+});
+
+document.getElementById("lightmapTexture").addEventListener("change", function(event) {
+    var file = event.target.files[0];
+    if (file) {
+        var reader = new FileReader();
+        reader.onload = function(fileEvent) {
+            var lightmapTexture = new BABYLON.Texture(fileEvent.target.result, scene);
+            sphereMaterial.lightmapTexture = lightmapTexture;
+            sphereMaterial.useLightmapAsShadowmap = true;
+        };
+        reader.readAsDataURL(file);
+    }
+});
 
 sphere.material = sphereMaterial;
 
-// Render loop
 engine.runRenderLoop(function() {
     scene.render();
 });

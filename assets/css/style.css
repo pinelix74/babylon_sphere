@@ -1,0 +1,22 @@
+body {
+    padding: 0px;
+    margin: 0px;
+    border: 0px;
+    overflow: hidden;
+}
+
+canvas {
+    padding: 0px;
+    border: 0px;
+}
+
+#control_panel {
+    position: absolute;
+    top: 70px;
+    left: 20px;
+    color: white;
+}
+
+.label {
+    margin-top: 10px;
+}
